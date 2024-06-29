@@ -2,18 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Dimensions, Switch, Text } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './screens/HomeScreen';
-import QuestionScreen from './screens/QuestionScreen';
-import ResultScreen from './screens/ResultScreen';
-import PaymentScreen from './screens/PaymentScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import Logo from './assets/Images/logo.png';
 import { Image } from 'expo-image';
 import Modal from "react-native-modal";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import { GlobalStateProvider, GlobalStateContext } from './GlobalStateContext';
+
+
+
+//////// my imports
+import { GlobalStateProvider, GlobalStateContext } from './src/GlobalStateContext';
+import HomeScreen from './src/screens/HomeScreen';
+import QuestionScreen from './src/screens/QuestionScreen';
+import ResultScreen from './src/screens/ResultScreen';
+import PaymentScreen from './src/screens/PaymentScreen';
+import Logo from './src/assets/Images/logo.png';
 
 // Prevent the splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -72,9 +76,9 @@ function CustomHeader({ navigation }) {
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'Montserrat-Regular': require('./assets/fonts/Montserrat/static/Montserrat-Regular.ttf'),
-    'PlayfairDisplay-Regular': require('./assets/fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf'),
-    'PlayfairDisplay-Bold': require('./assets/fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf'),
+    'Montserrat-Regular': require('./src/assets/fonts/Montserrat/static/Montserrat-Regular.ttf'),
+    'PlayfairDisplay-Regular': require('./src/assets/fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf'),
+    'PlayfairDisplay-Bold': require('./src/assets/fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf'),
   });
 
   useEffect(() => {
