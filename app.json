@@ -28,6 +28,7 @@
     ],
     "assetBundlePatterns": [
       "src/assets/**/*"
-    ]
+    ],
+    "platforms": ["ios", "android", "web"]
   }
 }
