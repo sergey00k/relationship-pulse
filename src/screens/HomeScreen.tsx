@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, SwitchComponent } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Image } from 'expo-image';
@@ -22,53 +22,53 @@ export default function HomeScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <Image style={styles.backgroundImage} contentFit="cover" source={HomeBackground} />
-      <Text style={styles.headerText}>
-        Seberapa sehatkah hubunganmu?
+      <Text style={[styles.headerText, switchControl && {width: '40%'}]}>
+        {!switchControl ? ('Seberapa sehatkah hubunganmu?') : ('How healthy is your relationship?')}
       </Text>
       <View style={styles.bottomContentContainer}>
         <Text style={styles.subHeaderText}>
-          2,673 Tes dilakukan dalam 30 hari terakhir
+          {!switchControl ? ('2,673 Tes dilakukan dalam 30 hari terakhir') : ('2,673 Tests taken in the last 30 days')}
         </Text>
         <View style={styles.divider}>
           <Text style={styles.titleText}>
-            Mengapa tes ini penting?
+            {!switchControl ? ('Mengapa tes ini penting?') : ('Why is this test important?')}
           </Text>
         </View>
         <View style={styles.listContainer}>
           <View style={styles.IconTextView}>
             <Ionicons style={styles.checkmark} name="checkmark-circle-outline" />
             <Text style={styles.listText}>
-              Meningkatkan komunikasi
+              {!switchControl ? ('Meningkatkan komunikasi') : ('Improving communication')}
             </Text>
           </View>
           <View style={styles.IconTextView}>
             <Ionicons style={styles.checkmark} name="checkmark-circle-outline" />
             <Text style={styles.listText}>
-              Mendeteksi masalah sejak dini
+              {!switchControl ? ('Mendeteksi masalah sejak dini') : ('Identifying issues early')}
             </Text>
           </View>
           <View style={styles.IconTextView}>
             <Ionicons style={styles.checkmark} name="checkmark-circle-outline" />
             <Text style={styles.listText}>
-              Memperdalam ikatan emosional
+              {!switchControl ? ('Memperdalam ikatan emosional') : ('Strengthening emotional connections')}
             </Text>
           </View>
           <View style={styles.IconTextView}>
             <Ionicons style={styles.checkmark} name="checkmark-circle-outline" />
             <Text style={styles.listText}>
-              Memantau perkembangan hubungan
+              {!switchControl ? ('Memantau perkembangan hubungan') : ('Tracking relationship development')}
             </Text>
           </View>
           <View style={styles.IconTextView}>
             <Ionicons style={styles.checkmark} name="checkmark-circle-outline" />
             <Text style={styles.listText}>
-              Menjaga hubungan tetap sehat dan harmonis
+              {!switchControl ? ('Menjaga hubungan tetap sehat dan harmonis') : ('Maintaining a healthy and harmonious relationship')}
             </Text>
           </View>
         </View>
         <TouchableOpacity style={styles.startTestButton} onPress={() => navigation.navigate('Question', {switchControl})}>
           <Text style={styles.buttonText}>
-            MULAI TES (FREE)
+            {!switchControl ? ('MULAI TES (FREE)') : ('START TEST (FREE)')}
           </Text>
         </TouchableOpacity>
         <Text style={styles.footerText}>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   startTestButton: {
     backgroundColor: '#874E4C',
-    width: '36%',
+    width: '38%',
     height: '10%',
     alignItems: 'center',
     justifyContent: 'center'
