@@ -9,9 +9,7 @@ import { Image } from 'expo-image';
 import Modal from "react-native-modal";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
-
-
-//////// my imports
+// Your imports
 import { GlobalStateProvider, GlobalStateContext } from './src/GlobalStateContext';
 import HomeScreen from './src/screens/HomeScreen';
 import QuestionScreen from './src/screens/QuestionScreen';
