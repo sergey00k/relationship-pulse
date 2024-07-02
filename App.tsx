@@ -75,6 +75,7 @@ function CustomHeader({ navigation }) {
 export default function App() {
   const [fontsLoaded] = useFonts({
     'Montserrat-Regular': require('./src/assets/fonts/Montserrat/static/Montserrat-Regular.ttf'),
+    'Montserrat-Bold': require('./src/assets/fonts/Montserrat/static/Montserrat-Bold.ttf'),
     'PlayfairDisplay-Regular': require('./src/assets/fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf'),
     'PlayfairDisplay-Bold': require('./src/assets/fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf'),
   });
