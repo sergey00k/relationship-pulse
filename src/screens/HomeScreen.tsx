@@ -10,7 +10,7 @@ import HomeBackground from '../assets/Images/boyGirlBackground.png';
 const { width, height } = Dimensions.get('window');
 const isMobileDevice = width < 768;
 
-const isMaxIphone = width > 300 && height > 900;
+const isMaxIphone = width > 300 && height > 720;
 
 export default function HomeScreen({ navigation, route }) {
   const { switchControl, selectedLanguage } = useContext(GlobalStateContext);
@@ -66,7 +66,7 @@ export default function HomeScreen({ navigation, route }) {
             </Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.startTestButton} onPress={() => navigation.navigate('Question', {switchControl})}>
+        <TouchableOpacity style={styles.startTestButton} onPress={() => navigation.navigate('Question', {answers: {}})}>
           <Text style={styles.buttonText}>
             {!switchControl ? ('MULAI TES (FREE)') : ('START TEST (FREE)')}
           </Text>
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: '6%',
+    backgroundColor: '#E5DACE'
   },
   bottomContentContainer: {
     height: '62%',
@@ -117,13 +118,13 @@ const styles = StyleSheet.create({
     marginBottom: 4
   },
   checkmark: {
-    fontSize: 32,
+    fontSize: isMaxIphone ? 32 : 26,
     marginRight: 8,
-    color: 'black'
+    color: '#563728'
   },
   headerText: {
     position: 'absolute',
-    top: 130,
+    top: isMaxIphone ? 124 : 110,
     left: 26,
     width: '42%',
     color: 'white',
@@ -137,21 +138,24 @@ const styles = StyleSheet.create({
     width: '36%',
     marginTop: 8,
     textAlign: 'center',
-    fontFamily: 'Montserrat-Regular'
+    fontFamily: 'Montserrat-Regular',
+    color: '#563728'
   },
   divider: {
-    borderTopColor: 'black',
+    borderTopColor: '#563728',
     borderTopWidth: 2,
     paddingTop: isMaxIphone ? 28 : 22
   },
   titleText: {
     fontSize: RFValue(22), // Adjusted to be responsive
     textAlign: 'center',
+    color: '#563728',
     fontFamily: 'PlayfairDisplay-Regular'
   },
   listText: {
     fontSize: RFValue(12), // Adjusted to be responsive
     fontFamily: 'Montserrat-Regular',
+    color: '#563728'
   },
   buttonText: {
     fontSize: RFValue(11),
@@ -162,6 +166,7 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: RFValue(8), // Adjusted to be responsive
     fontFamily: 'Montserrat-Regular',
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#563728'
   }
 });

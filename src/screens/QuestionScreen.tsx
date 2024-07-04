@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Button, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
@@ -9,7 +9,10 @@ import { GlobalStateContext } from '../GlobalStateContext';
 import dataIndo from '../TestData';
 import dataEnglish from '../TestData-english'
 
+const { width, height } = Dimensions.get('window');
+const isMobileDevice = width < 768;
 
+const isMaxIphone = width > 300 && height > 720;
 
 interface Navigation {
     navigate: (screen: string, params?: object) => void;
@@ -19,6 +22,8 @@ interface UserAnswers {
     [key: number]: number;
 }
 
+
+
 export default function QuestionScreen({ navigation, route }: { navigation: Navigation }) {
     const { switchControl, selectedLanguage } = useContext(GlobalStateContext);
     const [questionNumber, setQuestionNumber] = useState(0);
@@ -27,10 +32,16 @@ export default function QuestionScreen({ navigation, route }: { navigation: Navi
     const [usersCurrentAnswer, setUsersCurrentAnswer] = useState(0);
 
     const [data, setData] = useState(switchControl ? dataEnglish : dataIndo)
+    const { answers } = route.params || {};
 
 
 
     useEffect(() => {
+        if (Object.keys(answers).length > 1) {
+            setUsersAnswers(answers)
+            setQuestionNumber(15)
+        }
+
         setData(switchControl ? dataEnglish : dataIndo)
         console.log(switchControl + ' this is the log')
     },[switchControl])
@@ -56,10 +67,12 @@ export default function QuestionScreen({ navigation, route }: { navigation: Navi
 
 
     const goBack = () => {
+
         setQuestionNumber(prevNumber => prevNumber - 1);
     };
 
     const goForward = () => {
+
         setQuestionNumber(prevNumber => prevNumber + 1);
     };
 
@@ -86,7 +99,7 @@ export default function QuestionScreen({ navigation, route }: { navigation: Navi
     
             
     
-            navigation.navigate('Result', { healthScore, survivalScore, switchControl });
+            navigation.navigate('Result', { healthScore, survivalScore, answers: usersAnswers });
             return;
         } else {
             return
@@ -98,21 +111,21 @@ export default function QuestionScreen({ navigation, route }: { navigation: Navi
     return (
         <View style={styles.container}>
             <View style={{width: '80%'}}>
-                <Text style={{ textAlign: 'center', fontSize: 18, marginBottom: 16, fontFamily: 'PlayfairDisplay-Bold' }}>Question {questionNumber + 1} :</Text>
-                <Text style={{ textAlign: 'center', fontSize: 18, fontFamily: 'PlayfairDisplay-Regular' }}>{data[questionNumber].question}</Text>
+                <Text style={{ textAlign: 'center', fontSize: 18, marginBottom: 16, color: '#563728',  fontFamily: 'PlayfairDisplay-Bold' }}>Question {questionNumber + 1} :</Text>
+                <Text style={{ textAlign: 'center', fontSize: RFValue(16), color: '#563728', fontFamily: 'PlayfairDisplay-Regular' }}>{data[questionNumber].question}</Text>
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={[styles.answerButton, {transform: [{ rotate: '-2deg' }]} , usersAnswers[questionNumber] === 4 && { backgroundColor: '#874E4C' }]} onPress={() => handleAnswerPress(questionNumber, 4)}>
-                    <Text style={[styles.answerText, !switchControl && {fontSize: 16}, usersAnswers[questionNumber] === 4 && {color: 'white'}]}>{data[questionNumber].firstAnswer}</Text>
+                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(14)}, usersAnswers[questionNumber] === 4 && {color: 'white'}]}>{data[questionNumber].firstAnswer}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.answerButton, {transform: [{ rotate: '2deg' }]}, usersAnswers[questionNumber] === 3 && { backgroundColor: '#874E4C' }]} onPress={() => handleAnswerPress(questionNumber, 3)}>
-                    <Text style={[styles.answerText, !switchControl && {fontSize: 16}, usersAnswers[questionNumber] === 3 && {color: 'white'}]}>{data[questionNumber].secondAnswer}</Text>
+                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(14)}, usersAnswers[questionNumber] === 3 && {color: 'white'}]}>{data[questionNumber].secondAnswer}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.answerButton, {transform: [{ rotate: '-2deg' }]}, usersAnswers[questionNumber] === 2 && { backgroundColor: '#874E4C' }]} onPress={() => handleAnswerPress(questionNumber, 2)}>
-                    <Text style={[styles.answerText, !switchControl && {fontSize: 16}, usersAnswers[questionNumber] === 2 && {color: 'white'}]}>{data[questionNumber].thirdAnswer}</Text>
+                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(14)}, usersAnswers[questionNumber] === 2 && {color: 'white'}]}>{data[questionNumber].thirdAnswer}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.answerButton, {transform: [{ rotate: '2deg' }]}, usersAnswers[questionNumber] === 1 && { backgroundColor: '#874E4C' }]} onPress={() => handleAnswerPress(questionNumber, 1)}>
-                    <Text style={[styles.answerText, !switchControl && {fontSize: 16}, usersAnswers[questionNumber] === 1 && {color: 'white'}]}>{data[questionNumber].fourthAnswer}</Text>
+                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(14)}, usersAnswers[questionNumber] === 1 && {color: 'white'}]}>{data[questionNumber].fourthAnswer}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.backForwardView}>
@@ -146,7 +159,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingBottom: '8%',
+        paddingBottom: '6%',
         paddingTop: '8%',
         backgroundColor: '#E5DACE'
     },
@@ -158,13 +171,14 @@ const styles = StyleSheet.create({
     },
     answerButton: {
         backgroundColor: 'white',
-        width: '64%',
-        height: '20%',
+        width: '62%',
+        height: '18%',
         alignItems: 'center',
         justifyContent: 'center',
     },
     answerText: {
-        fontSize: 18,
+        color: '#563728',
+        fontSize: RFValue(16),
         width: '82%',
         textAlign: 'center',
         fontFamily: 'Montserrat-Regular'

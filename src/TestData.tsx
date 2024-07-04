@@ -72,7 +72,7 @@ const dataIndo = [
         fourthAnswer: "Kurang Percaya"
     },
     {
-        question: "Seberapa baik Anda dan pasangan Anda menyeimbangkan waktu yang dihabiskan bersama dan waktu yang dihabiskan masing-masing?",
+        question: "Seberapa baik Anda dan pasangan menyeimbangkan waktu yang dihabiskan bersama dan yang dihabiskan masing2?",
         weight: 3,
         firstAnswer: "Sangat baik",
         secondAnswer: "Baik",

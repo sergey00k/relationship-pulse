@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Dimensions, Switch, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions, Switch, Text,Platform } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -34,7 +34,7 @@ function CustomHeader({ navigation }) {
     <>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Image source={Logo} style={{ width: 120, height: 80, marginTop: 14 }} />
+          <Image source={Logo} style={{ width: 100, height: 60, marginTop: 10 }} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setDrawerVisible(true)}>
           <Ionicons name="menu-outline" size={width * 0.1} color="white" />
@@ -45,7 +45,7 @@ function CustomHeader({ navigation }) {
           <TouchableOpacity style={styles.drawerItem} onPress={() => navigation.navigate('Home')}>
             <Text style={styles.drawerText}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItem}>
+          <TouchableOpacity style={styles.drawerItem} onPress={() => {navigation.navigate('Result', { healthScore: 80, survivalScore: 80, switchControl })}}>
             <Text style={styles.drawerText}>About Us</Text>
           </TouchableOpacity>
           <View style={styles.drawerItem}>
@@ -61,9 +61,11 @@ function CustomHeader({ navigation }) {
                   setSelectedLanguage('Bahasa Indonesia');
                 }
               }}
+              thumbColor={"#fff"}// Ensures thumb color is always white
               trackColor={{ false: "#34C759", true: "#34C759" }}
               ios_backgroundColor="#34C759"
               value={switchControl}
+              
             />
           </View>
         </View>
@@ -146,4 +148,5 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#874E4C',
   },
+
 });
