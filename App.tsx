@@ -34,7 +34,7 @@ function CustomHeader({ navigation }) {
     <>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Image source={Logo} style={{ width: 120, height: 80, marginTop: 16 }} />
+          <Image source={Logo} style={{ width: 120, height: 80, marginTop: 14 }} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setDrawerVisible(true)}>
           <Ionicons name="menu-outline" size={width * 0.1} color="white" />
@@ -141,9 +141,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: '6%',
-    paddingTop: isMobileDevice ? '10%' : 0,
     alignItems: 'center',
-    height: isMaxIphone ? 140 : 120,
+    height: isMaxIphone ? 100 : 80,
     width: '100%',
     backgroundColor: '#874E4C',
   },

@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingTop: '10%',
-        paddingBottom: '20%',
+        paddingBottom: '10%',
         backgroundColor: '#E5DACE'
       },
       IconTextView: {
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         width: '50%',
         height: '8%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
       },
       blurContainer: {
         padding: 10,

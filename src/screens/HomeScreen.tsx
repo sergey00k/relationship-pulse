@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '40%',
     justifyContent: 'space-between',
-    paddingHorizontal: '8%'
+    paddingHorizontal: '8%',
+    marginBottom: 20
   },
   backgroundImage: {
     width: '100%',
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     position: 'absolute',
-    top: 140,
+    top: 130,
     left: 26,
     width: '42%',
     color: 'white',
