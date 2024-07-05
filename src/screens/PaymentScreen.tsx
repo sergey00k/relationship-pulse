@@ -1,11 +1,12 @@
 // PaymentScreen.tsx
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { GlobalStateContext } from '../GlobalStateContext';
 import { Image } from 'expo-image';
+import PaymentModal from '../components/PaymentModal';
 
 ////////image imports //////////
 import lock from '../assets/Images/lock.png'
@@ -20,6 +21,7 @@ const isMaxIphone = width > 300 && height > 720;
 export default function PaymentScreen({ route, navigation }) {
     const { healthScore, survivalScore } = route.params || {};
     const { switchControl, selectedLanguage } = useContext(GlobalStateContext);
+    const [isModalVisible, setIsModalVisible] = useState(false)
 
 
     console.log('healthScore: ' + healthScore)
@@ -28,7 +30,10 @@ export default function PaymentScreen({ route, navigation }) {
         console.log('survivalScore: ' + survivalScore)
     },[healthScore, survivalScore, route.params])
 
-    
+    const toggleModal = () => {
+      setIsModalVisible(!isModalVisible);
+    };
+
 
     return (
         <View style={styles.container}>
@@ -91,11 +96,12 @@ export default function PaymentScreen({ route, navigation }) {
                       IDR 49,000
                 </Text>
             </View>
-            <TouchableOpacity style={styles.startTestButton} onPress={() => navigation.navigate('Payment')}>
+            <TouchableOpacity style={styles.startTestButton} onPress={() => setIsModalVisible(true)}>
                 <Text style={styles.buttonText}>
                     {!switchControl ? ('PEMBAYARAN') : ('BUY NOW')}
                 </Text>
             </TouchableOpacity>
+            <PaymentModal isVisible={isModalVisible} onClose={toggleModal} />
         </View>
     );
 }
