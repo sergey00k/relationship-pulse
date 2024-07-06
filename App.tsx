@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Dimensions, Switch, Text,Platform } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions, Switch, Text, Platform } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,6 +8,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { Image } from 'expo-image';
 import Modal from "react-native-modal";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 // Your imports
 import { GlobalStateProvider, GlobalStateContext } from './src/GlobalStateContext';
@@ -25,6 +27,8 @@ const isMobileDevice = width < 768;
 const isMaxIphone = width > 300 && height > 900;
 
 const Stack = createNativeStackNavigator();
+
+const stripePromise = loadStripe('pk_live_51PVQObAxfjIWgFbrqOmIosM0DjVaUGL6tkMTeQyMAoIzLza4A44lWctZ8Guu83VoCXciHQcNQrmg2nvfXyPi4Xif00BNVHPKrM');
 
 function CustomHeader({ navigation }) {
   const { switchControl, setSwitchControl, selectedLanguage, setSelectedLanguage } = React.useContext(GlobalStateContext);
@@ -94,19 +98,21 @@ export default function App() {
 
   return (
     <GlobalStateProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            header: ({ navigation }) => <CustomHeader navigation={navigation} />,
-          }}
-        >
-          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: true }} />
-          <Stack.Screen name="Question" component={QuestionScreen} options={{ headerShown: true }} />
-          <Stack.Screen name="Result" component={ResultScreen} options={{ headerShown: true }} />
-          <Stack.Screen name="Payment" component={PaymentScreen} options={{ headerShown: true }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Elements stripe={stripePromise}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              header: ({ navigation }) => <CustomHeader navigation={navigation} />,
+            }}
+          >
+            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: true }} />
+            <Stack.Screen name="Question" component={QuestionScreen} options={{ headerShown: true }} />
+            <Stack.Screen name="Result" component={ResultScreen} options={{ headerShown: true }} />
+            <Stack.Screen name="Payment" component={PaymentScreen} options={{ headerShown: true }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Elements>
     </GlobalStateProvider>
   );
 }
