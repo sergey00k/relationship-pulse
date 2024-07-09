@@ -19,6 +19,16 @@ export default function HomeScreen({ navigation, route }) {
     console.log(switchControl + ' this is the log')
   },[switchControl])
 
+  if (!isMobileDevice) {
+    return (
+      <View style={styles.container}>
+        <Text style={[styles.titleText, {marginTop: '16%', width: '60%'}]}>
+          Hanya dapat diakses di perangkat mobile. (Only accessible on mobile devices.)
+        </Text>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <Image style={styles.backgroundImage} contentFit="cover" source={HomeBackground} />

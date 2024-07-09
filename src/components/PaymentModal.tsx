@@ -6,8 +6,9 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { useStripe as useStripeJS, Elements, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
-import { db } from '../firebaseConfig';
+import { db } from '../../secrets/firebaseConfig';
 import { doc, setDoc, updateDoc } from "firebase/firestore"; 
+import SendEmail from './SendEmail';
 
 interface PaymentModalProps {
   isVisible: boolean;
@@ -40,19 +41,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
     }
   }, [isVisible, stripe]);
 
-  const EmailSection = () => {
-    return (
-      <View style={{width: '70%', height: '100%', paddingBottom: 20, justifyContent: 'space-between', alignItems: 'center'}}>
-        <Text style={styles.modalTitle}>Enter your email</Text>
-        <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} />
-        <TouchableOpacity style={[styles.startTestButton, {height: 40, width: '64%', marginTop: 30}]} onPress={() => userEnteredEmail(email)}>
-          <Text style={styles.buttonText}>
-            {!switchControl ? ('CONFIRM') : ('CONFIRM')}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
 
   const createPaymentIntent = async () => {
     try {
@@ -122,6 +110,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
       await updateDoc(doc(db, 'emailList', email), {
         paid: true
       });
+      SendEmail(email)
       
       Alert.alert('Success', 'Your payment was successful!');
       onClose(); // Close the modal on success
@@ -129,9 +118,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
   };
 
   const userEnteredEmail = async (email: string) => {
+    const lowerCaseEmail = email.toLowerCase()
+    setEmail(lowerCaseEmail)
+    
     try {
-      await setDoc(doc(db, 'emailList', email), {
-        email: email,
+      await setDoc(doc(db, 'emailList', lowerCaseEmail), {
+        email: lowerCaseEmail,
         paid: false
       });
     } catch (error) {
@@ -190,7 +182,16 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose}>
       <View style={styles.modalContent}>
-        {!emailConfirmed ? ( <EmailSection />) : (
+        {!emailConfirmed ? ( 
+          <View style={{width: '70%', height: '100%', paddingBottom: 20, justifyContent: 'space-between', alignItems: 'center'}}>
+            <Text style={styles.modalTitle}>Enter your email</Text>
+            <TextInput style={[styles.input, {marginTop: 24}]} placeholder="Email" value={email} onChangeText={setEmail} />
+            <TouchableOpacity style={[styles.startTestButton, {height: 40, width: '64%', marginTop: 30}]} onPress={() => userEnteredEmail(email)}>
+              <Text style={styles.buttonText}>
+                {!switchControl ? ('CONFIRM') : ('CONFIRM')}
+              </Text>
+            </TouchableOpacity>
+        </View>) : (
         <>
           {chosenPaymentMethod.length > 1 ? (
             <Text style={styles.modalTitle}>Enter your details</Text>

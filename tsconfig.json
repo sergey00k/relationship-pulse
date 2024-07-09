@@ -14,6 +14,6 @@
   },
   "include": [
     "src"
-, "App.tsx", "index.tsx"  ],
+, "App.tsx", "index.tsx", "secrets"  ],
   "extends": "expo/tsconfig.base"
 }

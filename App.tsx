@@ -40,9 +40,13 @@ function CustomHeader({ navigation }) {
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Image source={Logo} style={{ width: 100, height: 60, marginTop: 10 }} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setDrawerVisible(true)}>
-          <Ionicons name="menu-outline" size={width * 0.1} color="white" />
-        </TouchableOpacity>
+        {isMobileDevice ? (
+          <TouchableOpacity onPress={() => setDrawerVisible(true)}>
+            <Ionicons name="menu-outline" size={width * 0.1} color="white" />
+          </TouchableOpacity>
+        ) : (
+        <View></View>
+        )}
       </View>
       <Modal isVisible={drawerVisible} animationIn="slideInRight" animationOut="slideOutRight" onBackdropPress={() => setDrawerVisible(false)}>
         <View style={styles.drawerContainer}>

@@ -24,11 +24,16 @@
       "favicon": "./src/assets/Images/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-asset"
     ],
     "assetBundlePatterns": [
       "src/assets/**/*"
     ],
-    "platforms": ["ios", "android", "web"]
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ]
   }
 }
