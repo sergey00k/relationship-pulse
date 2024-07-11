@@ -10,7 +10,7 @@ import HomeBackground from '../assets/Images/boyGirlBackground.png';
 const { width, height } = Dimensions.get('window');
 const isMobileDevice = width < 768;
 
-const isMaxIphone = width > 300 && height > 720;
+const isMaxIphone = width > 425 && height > 720;
 
 export default function HomeScreen({ navigation, route }) {
   const { switchControl, selectedLanguage } = useContext(GlobalStateContext);
@@ -36,9 +36,10 @@ export default function HomeScreen({ navigation, route }) {
         {!switchControl ? ('Seberapa sehatkah hubunganmu?') : ('How healthy is your relationship?')}
       </Text>
       <View style={styles.bottomContentContainer}>
-        <Text style={styles.subHeaderText}>
-          {!switchControl ? ('2,673 Tes dilakukan dalam 30 hari terakhir') : ('2,673 Tests taken in the last 30 days')}
-        </Text>
+        <View style={{height: 10}}></View>
+        {/*<Text style={styles.subHeaderText}>
+            {!switchControl ? ('2,673 Tes dilakukan dalam 30 hari terakhir') : ('2,673 Tests taken in the last 30 days')}
+          </Text>*/}
         <View style={styles.divider}>
           <Text style={styles.titleText}>
             {!switchControl ? ('Mengapa tes ini penting?') : ('Why is this test important?')}
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     borderTopColor: '#563728',
-    borderTopWidth: 2,
+    borderTopWidth: 1,
     paddingTop: isMaxIphone ? 28 : 22
   },
   titleText: {

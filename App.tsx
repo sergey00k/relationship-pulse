@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Dimensions, Switch, Text, Platform } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions, Switch, Text, Platform, Appearance } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -17,14 +17,19 @@ import HomeScreen from './src/screens/HomeScreen';
 import QuestionScreen from './src/screens/QuestionScreen';
 import ResultScreen from './src/screens/ResultScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
+import AboutScreen from './src/screens/AboutUsScreen';
+import ContactUsScreen from './src/screens/ContactUsScreen';
 import Logo from './src/assets/Images/logo.png';
+
+const colorScheme = Appearance.getColorScheme();
+const isDarkMode = colorScheme === 'dark'
 
 // Prevent the splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
 
 const { width, height } = Dimensions.get('window');
 const isMobileDevice = width < 768;
-const isMaxIphone = width > 300 && height > 900;
+const isMaxIphone = width > 425 && height > 720;
 
 const Stack = createNativeStackNavigator();
 
@@ -54,7 +59,13 @@ function CustomHeader({ navigation }) {
             <Text style={styles.drawerText}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.drawerItem} onPress={() => {navigation.navigate('Result', { healthScore: 80, survivalScore: 80, switchControl })}}>
+            <Text style={styles.drawerText}>Test</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.drawerItem} onPress={() => {navigation.navigate('AboutUs')}}>
             <Text style={styles.drawerText}>About Us</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.drawerItem} onPress={() => {navigation.navigate('ContactUs')}}>
+            <Text style={styles.drawerText}>Contact Us</Text>
           </TouchableOpacity>
           <View style={styles.drawerItem}>
             <Text style={styles.drawerText}>Language: </Text>
@@ -90,10 +101,17 @@ export default function App() {
     'PlayfairDisplay-Bold': require('./src/assets/fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf'),
   });
 
+
+
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
+    /*if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.style.setProperty('color-scheme', 'light');
+      document.documentElement.style.setProperty('background-color', 'red', 'important');
+      document.documentElement.style.setProperty('color', '#000', 'important');
+    }*/
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
@@ -114,6 +132,8 @@ export default function App() {
             <Stack.Screen name="Question" component={QuestionScreen} options={{ headerShown: true }} />
             <Stack.Screen name="Result" component={ResultScreen} options={{ headerShown: true }} />
             <Stack.Screen name="Payment" component={PaymentScreen} options={{ headerShown: true }} />
+            <Stack.Screen name="AboutUs" component={AboutScreen} options={{ headerShown: true }} />
+            <Stack.Screen name="ContactUs" component={ContactUsScreen} options={{ headerShown: true }} />
           </Stack.Navigator>
         </NavigationContainer>
       </Elements>
@@ -138,11 +158,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#874E4C',
   },
   drawerItem: {
-    marginBottom: 30,
+    marginBottom: 24,
     width: '100%',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0.8,
     borderColor: 'white',
-    paddingVertical: 12,
+    paddingVertical: 8,
   },
   drawerText: {
     fontSize: RFValue(14),
@@ -156,7 +176,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: isMaxIphone ? 100 : 80,
     width: '100%',
-    backgroundColor: '#874E4C',
+    backgroundColor: isDarkMode ? 'red' : '#874E4C',
   },
 
 });

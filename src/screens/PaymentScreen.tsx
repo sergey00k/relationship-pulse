@@ -12,11 +12,12 @@ import PaymentModal from '../components/PaymentModal';
 import lock from '../assets/Images/lock.png'
 import x from '../assets/Images/x.png'
 import tag from '../assets/Images/tag.png'
+import bookCover from '../assets/Images/book-cover.png'
 
 const { width, height } = Dimensions.get('window');
 const isMobileDevice = width < 768;
 
-const isMaxIphone = width > 300 && height > 720;
+const isMaxIphone = width > 425 && height > 720;
 
 export default function PaymentScreen({ route, navigation }) {
     const { healthScore, survivalScore } = route.params || {};
@@ -41,26 +42,27 @@ export default function PaymentScreen({ route, navigation }) {
                 <Text style={{ fontFamily: 'PlayfairDisplay-Bold',color: '#563728', fontSize: RFValue(28), marginBottom: 12}}>{!switchControl ? ('Hasil Tes:') : ('Test Result:')}</Text>
                 <Text style={{ fontFamily: 'PlayfairDisplay-Regular',color: '#563728', fontSize: RFValue(22), marginBottom: 12}}>{!switchControl ? ('Peluang bertahan') : ('Survival Probability')}</Text>
                 <Image source={lock} style={{width: 50, height: 50, marginBottom:12}} />
-                <Text style={{ fontFamily: 'PlayfairDisplay-Regular',color: '#563728', fontSize: RFValue(14), marginBottom: 12}}>Apa yang Anda dapatkan dalam hasil tes ini?</Text>
+                <Text style={{ fontFamily: 'PlayfairDisplay-Regular',color: '#563728', fontSize: RFValue(16), marginBottom: 6}}>{!switchControl ? ('Apa yang akan Anda dapatkan?') : ('What will you get?')}</Text>
             </View>
             <View style={[styles.subViews, {height: '20%'}]}>
                 <View style={styles.IconTextView}>
                     <Ionicons style={styles.checkmark} name="checkmark-circle-outline" />
                     <Text style={styles.listText}>
-                        {!switchControl ? ('Persentase peluang hubungan Anda bertahan') : ('Improving communication')}
+                        {!switchControl ? ('Persentase peluang hubungan Anda bertahan') : ('Percentage chance of your relationship surviving')}
                     </Text>
                 </View>
                 <View style={styles.IconTextView}>
                     <Ionicons style={styles.checkmark} name="checkmark-circle-outline" />
                     <Text style={styles.listText}>
-                        {!switchControl ? ('Tips personal untuk memperkuat hubungan Anda') : ('Improving communication')}
+                        {!switchControl ? ('Tips personal untuk memperkuat hubungan Anda') : ('Personalized tips to strengthen your relationship')}
                     </Text>
                 </View>
-                <View style={styles.IconTextView}>
+                <View style={[styles.IconTextView, {marginBottom: 6, paddingVertical: 0}]}>
                     <Ionicons style={styles.checkmark} name="checkmark-circle-outline" />
-                    <Text style={[styles.listText, {fontFamily: 'Montserrat-Bold'}]}>
-                        {!switchControl ? ('BONUS E-book “Bertengkar Itu Sehat: Kenapa Konflik Bisa Menyelamatkan Hubungan” dalam PDF') : ('Improving communication')}
+                    <Text style={[styles.listText, {fontFamily: 'Montserrat-Bold', width: '68%'}]}>
+                        {!switchControl ? ('BONUS E-book “Bertengkar Itu Sehat: Kenapa Konflik Bisa Menyelamatkan Hubungan” dalam PDF') : ('Bonus e-book "Fighting is Healthy: Why Conflict Can Save Your Relationship" in PDF')}
                     </Text>
+                    <Image source={bookCover} contentFit="cover" style={{height: 78, width: 46}} />
                 </View>
             </View>
             <View style={styles.subViews}>
@@ -83,7 +85,7 @@ export default function PaymentScreen({ route, navigation }) {
                       </Text>
                     </View>
                   </View>
-                  <Image source={tag} style={{ height: 40, width: 40}}/>
+                  <Image source={tag}  style={{ height: 40, width: 40}}/>
                 </View>
                 <View style={{ alignItems: 'center'}}>
                   <Image source={x} style={{ position: 'relative', top: 35, height: 40, width: 40}} />
@@ -91,7 +93,7 @@ export default function PaymentScreen({ route, navigation }) {
                         IDR 99,000
                   </Text>
                 </View>
-                <Text style={{ fontFamily: 'Montserrat-Regular', color: '#563728', position: 'relative', right: '20%'}}>Hanya</Text>
+                <Text style={{ fontFamily: 'Montserrat-Regular', color: '#563728', position: 'relative', right: '20%'}}>{!switchControl ? ('Hanya') : ('Only')}</Text>
                 <Text style={{ fontFamily: 'Montserrat-Bold', color: '#563728', marginLeft: 4, fontSize: RFValue(26)}}>
                       IDR 49,000
                 </Text>
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingTop: isMaxIphone ? '6%' : '4%',
-        paddingBottom: '8%',
+        paddingBottom: '6%',
         backgroundColor: '#E5DACE'
       },
       IconTextView: {

@@ -9,7 +9,7 @@ import { GlobalStateContext } from '../GlobalStateContext';
 const { width, height } = Dimensions.get('window');
 const isMobileDevice = width < 768;
 
-const isMaxIphone = width > 300 && height > 720;
+const isMaxIphone = width > 425 && height > 720;
 
 export default function ResultScreen({ route, navigation }) {
     const { healthScore, survivalScore, answers } = route.params || {};
@@ -28,7 +28,7 @@ export default function ResultScreen({ route, navigation }) {
         <View style={styles.container}>
             <View style={styles.subViews}>
                 <Text style={{ fontFamily: 'PlayfairDisplay-Bold', color: '#563728', fontSize: RFValue(28), marginBottom: 12}}>{!switchControl ? ('Hasil Tes:') : ('Test Result:')}</Text>
-                <Text style={{ fontFamily: 'PlayfairDisplay-Regular', color: '#563728', fontSize: RFValue(22), marginBottom: 12}}>Kesehatan Hubungan Anda</Text>
+                <Text style={{ fontFamily: 'PlayfairDisplay-Regular', color: '#563728', fontSize: RFValue(22), marginBottom: 12}}>{!switchControl ? ("Kesehatan Hubungan Anda") : ("Your Relationship Health")}</Text>
                 <Text style={{ fontFamily: 'Montserrat-Bold', color: '#563728', fontSize: RFValue(34)}}>{String(healthScore)?.slice(0, 3)}%</Text>
             </View>
             <View style={styles.subViews}>
@@ -65,7 +65,7 @@ export default function ResultScreen({ route, navigation }) {
             </View>
             <View style={styles.subViews}>
                 <Text style={{ fontFamily: 'PlayfairDisplay-Regular', fontSize: 22, color: '#563728'  }}>
-                    {!switchControl ? ('Peluang bertahan') : ('Improving communication')}
+                    {!switchControl ? ('Peluang bertahan') : ('Survival Probability')}
                 </Text>
                     <View style={{flexDirection: 'row', marginTop: 12, alignItems: 'flex-end'}}>
                         <Text style={{ fontFamily: 'Montserrat-Regular', fontSize: 16}}>
@@ -82,7 +82,7 @@ export default function ResultScreen({ route, navigation }) {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.startTestButton} onPress={() => navigation.navigate('Payment', { healthScore, survivalScore  })}>
                     <Text style={styles.buttonText}>
-                        {!switchControl ? ('HASIL BERIKUTNYA') : ('Improving communication')}
+                        {!switchControl ? ('HASIL BERIKUTNYA') : ('NEXT RESULT')}
                     </Text>
                 </TouchableOpacity>
             </View>

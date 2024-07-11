@@ -12,7 +12,7 @@ import dataEnglish from '../TestData-english'
 const { width, height } = Dimensions.get('window');
 const isMobileDevice = width < 768;
 
-const isMaxIphone = width > 300 && height > 720;
+const isMaxIphone = width > 425 && height > 720;
 
 interface Navigation {
     navigate: (screen: string, params?: object) => void;
@@ -116,16 +116,16 @@ export default function QuestionScreen({ navigation, route }: { navigation: Navi
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={[styles.answerButton, {transform: [{ rotate: '-2deg' }]} , usersAnswers[questionNumber] === 4 && { backgroundColor: '#874E4C' }]} onPress={() => handleAnswerPress(questionNumber, 4)}>
-                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(14)}, usersAnswers[questionNumber] === 4 && {color: 'white'}]}>{data[questionNumber].firstAnswer}</Text>
+                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(12)}, usersAnswers[questionNumber] === 4 && {color: 'white'}]}>{data[questionNumber].firstAnswer}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.answerButton, {transform: [{ rotate: '2deg' }]}, usersAnswers[questionNumber] === 3 && { backgroundColor: '#874E4C' }]} onPress={() => handleAnswerPress(questionNumber, 3)}>
-                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(14)}, usersAnswers[questionNumber] === 3 && {color: 'white'}]}>{data[questionNumber].secondAnswer}</Text>
+                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(12)}, usersAnswers[questionNumber] === 3 && {color: 'white'}]}>{data[questionNumber].secondAnswer}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.answerButton, {transform: [{ rotate: '-2deg' }]}, usersAnswers[questionNumber] === 2 && { backgroundColor: '#874E4C' }]} onPress={() => handleAnswerPress(questionNumber, 2)}>
-                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(14)}, usersAnswers[questionNumber] === 2 && {color: 'white'}]}>{data[questionNumber].thirdAnswer}</Text>
+                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(12)}, usersAnswers[questionNumber] === 2 && {color: 'white'}]}>{data[questionNumber].thirdAnswer}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.answerButton, {transform: [{ rotate: '2deg' }]}, usersAnswers[questionNumber] === 1 && { backgroundColor: '#874E4C' }]} onPress={() => handleAnswerPress(questionNumber, 1)}>
-                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(14)}, usersAnswers[questionNumber] === 1 && {color: 'white'}]}>{data[questionNumber].fourthAnswer}</Text>
+                    <Text style={[styles.answerText, !switchControl && {fontSize: RFValue(12)}, usersAnswers[questionNumber] === 1 && {color: 'white'}]}>{data[questionNumber].fourthAnswer}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.backForwardView}>
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     },
     answerText: {
         color: '#563728',
-        fontSize: RFValue(16),
+        fontSize: RFValue(14),
         width: '82%',
         textAlign: 'center',
         fontFamily: 'Montserrat-Regular'

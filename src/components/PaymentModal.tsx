@@ -36,6 +36,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
   const [test, setTest] = useState('white');
 
   useEffect(() => {
+    if (chosenPaymentMethod.length > 1) {
+      setChosenPaymentMethod("")
+    }
+  }, [isVisible])
+
+  useEffect(() => {
     if (isVisible && stripe) {
       createPaymentIntent();
     }
@@ -182,7 +188,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose}>
       <View style={styles.modalContent}>
-        {!emailConfirmed ? ( 
+        {(!emailConfirmed || (!email.includes('@'))) ? ( 
           <View style={{width: '70%', height: '100%', paddingBottom: 20, justifyContent: 'space-between', alignItems: 'center'}}>
             <Text style={styles.modalTitle}>Enter your email</Text>
             <TextInput style={[styles.input, {marginTop: 24}]} placeholder="Email" value={email} onChangeText={setEmail} />
@@ -198,7 +204,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
           ) : (
             <Text style={styles.modalTitle}>Choose a Payment Method</Text>
           )}
-          {chosenPaymentMethod.length > 1 ? (
+          {((chosenPaymentMethod.length > 1) && (email.includes('@'))) ? (
             <>
               {chosenPaymentMethod === 'stripe' && (
                 <View style={styles.cardContainer}>
