@@ -12,7 +12,7 @@ import SendEmail from './SendEmail';
 
 interface PaymentModalProps {
   isVisible: boolean;
-  onClose: () => void;
+  onClose: (paid?: any) => void;
 }
 
 const stripePromise = loadStripe('pk_test_51PVQObAxfjIWgFbrSwnC54rN9jy1J7nnjT8R2dLt4OKpjRVemzRNCtFupPcxhWUkw9uNHf3zcnkpIf3Z3RQswoB100F74OiGHP');
@@ -34,6 +34,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
   const [ovoCustomerEmail, setOvoCustomerEmail] = useState("");
 
   const [test, setTest] = useState('white');
+  const [paymentError, setPaymentError] = useState(false);
 
   useEffect(() => {
     if (chosenPaymentMethod.length > 1) {
@@ -74,6 +75,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
   };
 
   const handleStripePayment = async () => {
+    setPaymentError(false)
     if (!chosenPaymentMethod) {
       setChosenPaymentMethod("stripe");
       return;
@@ -112,14 +114,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
 
     if (result.error) {
       Alert.alert('Payment failed', result.error.message!);
+      setPaymentError(true)
     } else if (result.paymentIntent?.status === 'succeeded') {
       await updateDoc(doc(db, 'emailList', email), {
         paid: true
       });
       SendEmail(email)
       
-      Alert.alert('Success', 'Your payment was successful!');
-      onClose(); // Close the modal on success
+      onClose(true); // Close the modal on success
     }
   };
 
@@ -135,7 +137,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
     } catch (error) {
       console.error("Error updating document: ", error);
     }
-    setEmailConfirmed(true)
+    if (lowerCaseEmail.includes('@')) {
+      setEmailConfirmed(true)
+    }
   }
 
   const handleOVOPayment = async () => {
@@ -200,7 +204,10 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
         </View>) : (
         <>
           {chosenPaymentMethod.length > 1 ? (
+            <>
             <Text style={styles.modalTitle}>Enter your details</Text>
+            {paymentError && (<Text style={{color: 'red', fontFamily: 'Montserrat-Regular', fontSize: RFValue(12), marginBottom: 12}}>There was an error with the payment</Text>)}
+            </>
           ) : (
             <Text style={styles.modalTitle}>Choose a Payment Method</Text>
           )}
