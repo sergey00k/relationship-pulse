@@ -69,7 +69,7 @@ export default function PaymentScreen({ route, navigation }) {
                       <Text style={[styles.listText, {fontFamily: 'Montserrat-Bold', width: '68%'}]}>
                           {!switchControl ? ('BONUS E-book “Bertengkar Itu Sehat: Kenapa Konflik Bisa Menyelamatkan Hubungan” dalam PDF') : ('Bonus e-book "Fighting is Healthy: Why Conflict Can Save Your Relationship" in PDF')}
                       </Text>
-                      <Image source={bookCover} contentFit="cover" style={{height: 78, width: 46}} />
+                      <Image source={bookCover} contentFit="cover" style={{height: 70, width: 38}} />
                   </View>
               </View>
               <View style={styles.subViews}>
@@ -146,7 +146,7 @@ export default function PaymentScreen({ route, navigation }) {
                     </Text>
                 </View>
               </View>
-              <Text style={styles.listText}>Please check your email for your FREE E-Book!</Text>
+              <Text style={styles.listText}>Please click the menu for your FREE E-Book!</Text>
               <View style={[styles.subViews, {borderTopColor: '#563728', borderTopWidth: 1, paddingTop: 14, width: '74%'}]}>
                 <Image source={check} style={styles.check}/>
                 <Text style={{ color: '#563728', textAlign: 'center', width: '50%', fontFamily: 'Montserrat-Bold', fontSize: RFValue(20)}}>Payment Successful!</Text>

@@ -19,6 +19,7 @@ import ResultScreen from './src/screens/ResultScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
 import AboutScreen from './src/screens/AboutUsScreen';
 import ContactUsScreen from './src/screens/ContactUsScreen';
+import EBookScreen from './src/screens/EBook';
 import Logo from './src/assets/Images/logo.png';
 
 const colorScheme = Appearance.getColorScheme();
@@ -58,14 +59,14 @@ function CustomHeader({ navigation }) {
           <TouchableOpacity style={styles.drawerItem} onPress={() => navigation.navigate('Home')}>
             <Text style={styles.drawerText}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItem} onPress={() => {navigation.navigate('Result', { healthScore: 80, survivalScore: 80, switchControl })}}>
-            <Text style={styles.drawerText}>Test</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.drawerItem} onPress={() => {navigation.navigate('AboutUs')}}>
             <Text style={styles.drawerText}>About Us</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.drawerItem} onPress={() => {navigation.navigate('ContactUs')}}>
             <Text style={styles.drawerText}>Contact Us</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.drawerItem} onPress={() => {navigation.navigate('Ebook')}}>
+            <Text style={styles.drawerText}>E-Book</Text>
           </TouchableOpacity>
           <View style={styles.drawerItem}>
             <Text style={styles.drawerText}>Language: </Text>
@@ -134,6 +135,7 @@ export default function App() {
             <Stack.Screen name="Payment" component={PaymentScreen} options={{ headerShown: true }} />
             <Stack.Screen name="AboutUs" component={AboutScreen} options={{ headerShown: true }} />
             <Stack.Screen name="ContactUs" component={ContactUsScreen} options={{ headerShown: true }} />
+            <Stack.Screen name="Ebook" component={EBookScreen} options={{ headerShown: true }} />
           </Stack.Navigator>
         </NavigationContainer>
       </Elements>
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: isMaxIphone ? 100 : 80,
     width: '100%',
-    backgroundColor: isDarkMode ? 'red' : '#874E4C',
+    backgroundColor: !isDarkMode ? '#874E4C' : '#874E4C',
   },
 
 });

@@ -119,7 +119,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
       await updateDoc(doc(db, 'emailList', email), {
         paid: true
       });
-      SendEmail(email)
+      //SendEmail(email)
       
       onClose(true); // Close the modal on success
     }
