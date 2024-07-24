@@ -88,7 +88,7 @@ export default function EBookScreen() {
                 </TouchableOpacity>
             </View>
         ) : (
-        <View style={{width: '70%', height: '24%', paddingBottom: 20, justifyContent: 'space-between', alignItems: 'center'}}>
+        <View style={{width: '70%', height: '20%', paddingBottom: 20, justifyContent: 'space-between', alignItems: 'center'}}>
             <Text style={styles.bodyText}>Enter your email</Text>
             {emailError && (<Text style={{color: 'red', textAlign: 'center', marginTop: 4, fontFamily: 'Montserrat-Regular', fontSize: RFValue(10)}}>{!switchControl ? ("Sorry, we couldn't find your email in our database.") : ("Sorry, we couldn't find your email in our database.")}</Text>)}
             <TextInput style={[styles.input, {marginTop: 24}]} placeholder="Email" value={email} onChangeText={setEmail} />
@@ -99,14 +99,13 @@ export default function EBookScreen() {
             </TouchableOpacity>
         </View>
         )}
-            <Text style={styles.headerText}>
-                {!switchControl ? ("Tentang Kami") : ("Relationship Health E-Book")}
-            </Text>
-            <Image source={book} style={styles.ebook} />
+    <View style={{alignItems: 'center'}}>
+        <Image source={book} style={styles.ebook} />
 
-      <Text style={styles.footerText}>
-        © 2024 Relationship Pulse. All rights reserved.
-      </Text>
+        <Text style={styles.footerText}>
+            © 2024 Relationship Pulse. All rights reserved.
+        </Text>
+      </View>
     </View>
   );
 }
@@ -135,8 +134,9 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   ebook: {
-    width: 180,
-    height: 320
+    width: 160,
+    height: 300,
+    marginBottom: 10
   },
   startTestButton: {
     backgroundColor: '#874E4C',
@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
     textAlign: 'center',
     color: '#563728',
-    marginBottom: 16
+    marginBottom: 16,
+    marginTop: 10
   }
 });
