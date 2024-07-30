@@ -4,7 +4,7 @@
     "slug": "relationship-test-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/Images/icon.png",
+    "icon": "./src/assets/Images/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./src/assets/Images/splash.png",
@@ -16,12 +16,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/Images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/Images/logo.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./src/assets/Images/favicon.png"
+      "favicon": "./src/assets/Images/logo.png"
     },
     "plugins": [
       "expo-font",
