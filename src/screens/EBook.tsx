@@ -17,6 +17,8 @@ export default function EBookScreen() {
   const { switchControl, selectedLanguage } = React.useContext(GlobalStateContext);
 
   const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
   const [emailConfirmed, setEmailConfirmed] = useState(false)
   const [emailError, setEmailError] = useState(false);
 
@@ -51,7 +53,7 @@ export default function EBookScreen() {
   };
 
 
-  const userEnteredEmail = async (email: string) => {
+  const userEnteredEmail = async (email: string, password: string) => {
     setEmailError(false)
     const lowerCaseEmail = email.toLowerCase()
     setEmail(lowerCaseEmail)
@@ -63,7 +65,7 @@ export default function EBookScreen() {
     let flag = true
 
     for (const index in allEmails) {
-        if (allEmails[index].email === lowerCaseEmail) {
+        if ((allEmails[index].email === lowerCaseEmail) && (allEmails[index]?.password === password)) {
             if (allEmails[index].paid) {
                 setEmailConfirmed(true)
                 flag = false
@@ -73,8 +75,12 @@ export default function EBookScreen() {
 
     if (flag) {
         setEmailError(true)
+        return
     }
 
+    await updateDoc(doc(db, 'emailList', email), {
+        paid: true
+      });
   }
 
   return (
@@ -89,10 +95,11 @@ export default function EBookScreen() {
             </View>
         ) : (
         <View style={{width: '70%', height: '20%', paddingBottom: 20, justifyContent: 'space-between', alignItems: 'center'}}>
-            <Text style={styles.bodyText}>Enter your email</Text>
-            {emailError && (<Text style={{color: 'red', textAlign: 'center', marginTop: 4, fontFamily: 'Montserrat-Regular', fontSize: RFValue(10)}}>{!switchControl ? ("Sorry, we couldn't find your email in our database.") : ("Sorry, we couldn't find your email in our database.")}</Text>)}
+            <Text style={styles.bodyText}>Enter your email and password</Text>
+            {emailError && (<Text style={{color: 'red', textAlign: 'center', marginTop: 4, fontFamily: 'Montserrat-Regular', fontSize: RFValue(10)}}>{!switchControl ? ("Sorry, the email or password is incorrect.") : ("Sorry, the email or password is incorrect.")}</Text>)}
             <TextInput style={[styles.input, {marginTop: 24}]} placeholder="Email" value={email} onChangeText={setEmail} />
-            <TouchableOpacity style={[styles.startTestButton, {height: 40, width: '64%', marginTop: 30}]} onPress={() => userEnteredEmail(email)}>
+            <TextInput style={[styles.input, {marginTop: 12, fontSize: 16, paddingVertical: 6}]} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry={true} />
+            <TouchableOpacity style={[styles.startTestButton, {height: 40, width: '64%', marginTop: 30}]} onPress={() => userEnteredEmail(email, password)}>
               <Text style={styles.buttonText}>
                 {!switchControl ? ('UNLOCK') : ('UNLOCK')}
               </Text>

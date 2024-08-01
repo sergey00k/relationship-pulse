@@ -7,7 +7,7 @@ import { useStripe as useStripeJS, Elements, useElements, CardNumberElement, Car
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import { db } from '../../secrets/firebaseConfig';
-import { doc, setDoc, updateDoc } from "firebase/firestore"; 
+import { doc, setDoc, updateDoc, query, collection, getDocs, where } from "firebase/firestore"; 
 import SendEmail from './SendEmail';
 
 interface PaymentModalProps {
@@ -26,6 +26,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
 
   const [email, setEmail] = useState("")
   const [emailConfirmed, setEmailConfirmed] = useState(false)
+  const [password, setPassword] = useState("")
 
 
   const [ovoCustomerId, setOvoCustomerId] = useState("");
@@ -33,7 +34,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
   const [ovoCustomerPhone, setOvoCustomerPhone] = useState("");
   const [ovoCustomerEmail, setOvoCustomerEmail] = useState("");
 
-  const [test, setTest] = useState('white');
+  const [emailExistsError, setEmailExistsError] = useState(false);
   const [paymentError, setPaymentError] = useState(false);
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          amount: 330, // Example amount: 330 cents ($3.30)
+          amount: 60, // Example amount: 330 cents ($3.30)
           currency: 'usd',
         }),
       });
@@ -125,14 +126,36 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
     }
   };
 
-  const userEnteredEmail = async (email: string) => {
+  const userEnteredEmail = async (email: string, password: string) => {
+    setEmailExistsError(false)
     const lowerCaseEmail = email.toLowerCase()
     setEmail(lowerCaseEmail)
+
+    const emailListRef = collection(db, 'emailList');
+    const q = query(emailListRef, where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+
+    let passwordMatch = false;
+    let paidUser = false
+
+    querySnapshot.forEach(doc => {
+      const profile = doc.data();
+      if (profile.password === password) {
+        passwordMatch = true;
+        paidUser = profile.paid
+      }
+    });
+
+    if (!passwordMatch && !querySnapshot.empty) {
+      setEmailExistsError(true)
+      return
+    }
     
     try {
       await setDoc(doc(db, 'emailList', lowerCaseEmail), {
         email: lowerCaseEmail,
-        paid: false
+        password: password,
+        paid: paidUser
       });
     } catch (error) {
       console.error("Error updating document: ", error);
@@ -194,9 +217,11 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
       <View style={styles.modalContent}>
         {(!emailConfirmed || (!email.includes('@'))) ? ( 
           <View style={{width: '70%', height: '100%', paddingBottom: 20, justifyContent: 'space-between', alignItems: 'center'}}>
-            <Text style={styles.modalTitle}>Enter your email</Text>
-            <TextInput style={[styles.input, {marginTop: 24}]} placeholder="Email" value={email} onChangeText={setEmail} />
-            <TouchableOpacity style={[styles.startTestButton, {height: 40, width: '64%', marginTop: 30}]} onPress={() => userEnteredEmail(email)}>
+            <Text style={[styles.modalTitle, emailExistsError && {marginBottom: 6}]}>Enter an email and password</Text>
+            {emailExistsError && (<Text style={{color: 'red', textAlign: 'center', fontFamily: 'Montserrat-Regular', fontSize: RFValue(12), marginBottom: 4}}>Email already exists and entered password was wrong.</Text>)}
+            <TextInput style={[styles.input, {marginTop: 12, fontSize: 16, paddingVertical: 6}]} placeholder="Email" value={email} onChangeText={setEmail} />
+            <TextInput style={[styles.input, {marginTop: 12, fontSize: 16, paddingVertical: 6}]} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry={true} />
+            <TouchableOpacity style={[styles.startTestButton, {height: 40, width: '64%', marginTop: 15}]} onPress={() => userEnteredEmail(email, password)}>
               <Text style={styles.buttonText}>
                 {!switchControl ? ('CONFIRM') : ('CONFIRM')}
               </Text>
@@ -352,6 +377,7 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
     marginBottom: 20,
   },
   startTestButton: {

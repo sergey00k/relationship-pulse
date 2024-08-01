@@ -78,7 +78,7 @@ export default function QuestionScreen({ navigation, route }: { navigation: Navi
 
     const seeResults = () => {
         console.log(Object.keys(usersAnswers).length)
-        if ((questionNumber >= 14) && (Object.keys(usersAnswers).length === 15)) {
+        if ((questionNumber >= 14) && ((Object.keys(usersAnswers).length === 15) || true)) {
             let healthScore: number = 0;
             let survivalScore: number = 0;
     
