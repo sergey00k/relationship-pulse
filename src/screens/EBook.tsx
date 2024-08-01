@@ -98,8 +98,8 @@ export default function EBookScreen() {
             <Text style={styles.bodyText}>Enter your email and password</Text>
             {emailError && (<Text style={{color: 'red', textAlign: 'center', marginTop: 4, fontFamily: 'Montserrat-Regular', fontSize: RFValue(10)}}>{!switchControl ? ("Sorry, the email or password is incorrect.") : ("Sorry, the email or password is incorrect.")}</Text>)}
             <TextInput style={[styles.input, {marginTop: 24}]} placeholder="Email" value={email} onChangeText={setEmail} />
-            <TextInput style={[styles.input, {marginTop: 12, fontSize: 16, paddingVertical: 6}]} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry={true} />
-            <TouchableOpacity style={[styles.startTestButton, {height: 40, width: '64%', marginTop: 30}]} onPress={() => userEnteredEmail(email, password)}>
+            <TextInput style={[styles.input, {marginTop: 12}]} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry={true} />
+            <TouchableOpacity style={[styles.startTestButton, {height: 40, width: '64%', marginTop: 15}]} onPress={() => userEnteredEmail(email, password)}>
               <Text style={styles.buttonText}>
                 {!switchControl ? ('UNLOCK') : ('UNLOCK')}
               </Text>
@@ -141,8 +141,8 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   ebook: {
-    width: 160,
-    height: 300,
+    width: 156,
+    height: 285,
     marginBottom: 10
   },
   startTestButton: {

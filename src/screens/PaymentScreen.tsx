@@ -46,7 +46,7 @@ export default function PaymentScreen({ route, navigation }) {
             <View style={styles.subViews}>
                 <Text style={{ fontFamily: 'PlayfairDisplay-Bold',color: '#563728', fontSize: RFValue(28), marginBottom: 12}}>{!switchControl ? ('Hasil Tes:') : ('Test Result:')}</Text>
                 <Text style={{ fontFamily: 'PlayfairDisplay-Regular',color: '#563728', fontSize: RFValue(22), marginBottom: 12}}>{!switchControl ? ('Peluang bertahan') : ('Survival Probability')}</Text>
-                {!paymentSuccessful ? (<Image source={lock} style={{width: 50, height: 50, marginBottom:12}} />) : (<Text style={{ fontFamily: 'Montserrat-Bold', color: '#563728', fontSize: RFValue(34)}}>{String(survivalScore)?.slice(0, 3)}%</Text>)}
+                {!paymentSuccessful ? (<Image source={lock} style={{width: 50, height: 50, marginBottom:12}} />) : (<Text style={{ fontFamily: 'Montserrat-Bold', color: '#563728', fontSize: RFValue(34)}}>{Math.round(survivalScore)}%</Text>)}
                 {!paymentSuccessful && (<Text style={{ fontFamily: 'PlayfairDisplay-Regular',color: '#563728', fontSize: RFValue(16), marginBottom: 6}}>{!switchControl ? ('Apa yang akan Anda dapatkan?') : ('What will you get?')}</Text>)}
             </View>
 
@@ -66,10 +66,10 @@ export default function PaymentScreen({ route, navigation }) {
                   </View>
                   <View style={[styles.IconTextView, {marginBottom: 6, paddingVertical: 0}]}>
                       <Ionicons style={styles.checkmark} name="checkmark-circle-outline" />
-                      <Text style={[styles.listText, {fontFamily: 'Montserrat-Bold', width: '68%'}]}>
+                      <Text style={[styles.listText, {fontFamily: 'Montserrat-Bold', width: '68%', marginRight: 4}]}>
                           {!switchControl ? ('BONUS E-book “Bertengkar Itu Sehat: Kenapa Konflik Bisa Menyelamatkan Hubungan” dalam PDF') : ('Bonus e-book "Fighting is Healthy: Why Conflict Can Save Your Relationship" in PDF')}
                       </Text>
-                      <Image source={bookCover} contentFit="cover" style={{height: 70, width: 38}} />
+                      <Image source={bookCover} contentFit="cover" style={{height: 65, width: 34}} />
                   </View>
               </View>
               <View style={styles.subViews}>
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '70%',
         paddingRight: 14,
-        paddingVertical: 6,
+        paddingVertical: 4,
       },
       checkmark: {
         fontSize: isMaxIphone ? 28 : 22,

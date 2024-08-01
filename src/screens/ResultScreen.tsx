@@ -29,7 +29,7 @@ export default function ResultScreen({ route, navigation }) {
             <View style={styles.subViews}>
                 <Text style={{ fontFamily: 'PlayfairDisplay-Bold', color: '#563728', fontSize: RFValue(28), marginBottom: 12}}>{!switchControl ? ('Hasil Tes:') : ('Test Result:')}</Text>
                 <Text style={{ fontFamily: 'PlayfairDisplay-Regular', color: '#563728', fontSize: RFValue(22), marginBottom: 12}}>{!switchControl ? ("Kesehatan Hubungan Anda") : ("Your Relationship Health")}</Text>
-                <Text style={{ fontFamily: 'Montserrat-Bold', color: '#563728', fontSize: RFValue(34)}}>{String(healthScore)?.slice(0, 3)}%</Text>
+                <Text style={{ fontFamily: 'Montserrat-Bold', color: '#563728', fontSize: RFValue(34)}}>{Math.round(healthScore)}%</Text>
             </View>
             <View style={styles.subViews}>
                 <View style={styles.IconTextView}>
