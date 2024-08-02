@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text,TouchableOpacity, StyleSheet, Dimensions, Image } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text,TouchableOpacity, Animated, Easing, StyleSheet, Dimensions, Image } from 'react-native';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { GlobalStateContext } from '../GlobalStateContext';
 import book from '../assets/Images/book-cover.png'
@@ -83,6 +83,35 @@ export default function EBookScreen() {
       });
   }
 
+  /////////////// animation //////////
+
+
+  const animation = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(animation, {
+          toValue: 1,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animation, {
+          toValue: 0,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        })
+      ])
+    ).start();
+  }, []);
+
+  const translateY = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -8], // Adjust this value to change the bounce height
+  });
+
   return (
     <View style={styles.container}>
         {emailConfirmed ? (
@@ -96,8 +125,8 @@ export default function EBookScreen() {
         ) : (
         <View style={{width: '70%', height: '20%', paddingBottom: 20, justifyContent: 'space-between', alignItems: 'center'}}>
             <Text style={styles.bodyText}>Enter your email and password</Text>
-            {emailError && (<Text style={{color: 'red', textAlign: 'center', marginTop: 4, fontFamily: 'Montserrat-Regular', fontSize: RFValue(10)}}>{!switchControl ? ("Sorry, the email or password is incorrect.") : ("Sorry, the email or password is incorrect.")}</Text>)}
-            <TextInput style={[styles.input, {marginTop: 24}]} placeholder="Email" value={email} onChangeText={setEmail} />
+            {emailError && (<Text style={{color: 'red', textAlign: 'center', marginTop: 4, fontFamily: 'Montserrat-Regular', fontSize: RFValue(12)}}>{!switchControl ? ("Sorry, the email or password is incorrect.") : ("Sorry, the email or password is incorrect.")}</Text>)}
+            <TextInput style={[styles.input, {marginTop: emailError ? 12 : 24}]} placeholder="Email" value={email} onChangeText={setEmail} />
             <TextInput style={[styles.input, {marginTop: 12}]} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry={true} />
             <TouchableOpacity style={[styles.startTestButton, {height: 40, width: '64%', marginTop: 15}]} onPress={() => userEnteredEmail(email, password)}>
               <Text style={styles.buttonText}>
@@ -107,7 +136,14 @@ export default function EBookScreen() {
         </View>
         )}
     <View style={{alignItems: 'center'}}>
+    <Animated.View
+        style={
+          {
+            transform: [
+              { translateY },
+            ],}}>
         <Image source={book} style={styles.ebook} />
+    </Animated.View>
 
         <Text style={styles.footerText}>
             © 2024 Relationship Pulse. All rights reserved.
@@ -143,7 +179,7 @@ const styles = StyleSheet.create({
   ebook: {
     width: 156,
     height: 285,
-    marginBottom: 10
+    marginBottom: 6
   },
   startTestButton: {
     backgroundColor: '#874E4C',
@@ -173,6 +209,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#563728',
     marginBottom: 16,
-    marginTop: 10
+    marginTop: 6
   }
 });

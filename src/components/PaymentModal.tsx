@@ -15,7 +15,7 @@ interface PaymentModalProps {
   onClose: (paid?: any) => void;
 }
 
-const stripePromise = loadStripe('pk_test_51PVQObAxfjIWgFbrSwnC54rN9jy1J7nnjT8R2dLt4OKpjRVemzRNCtFupPcxhWUkw9uNHf3zcnkpIf3Z3RQswoB100F74OiGHP');
+const stripePromise = loadStripe('pk_live_51PVQObAxfjIWgFbrqOmIosM0DjVaUGL6tkMTeQyMAoIzLza4A44lWctZ8Guu83VoCXciHQcNQrmg2nvfXyPi4Xif00BNVHPKrM');
 
 const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
   const { switchControl } = React.useContext(GlobalStateContext);
@@ -132,7 +132,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isVisible, onClose }) => {
     setEmail(lowerCaseEmail)
 
     const emailListRef = collection(db, 'emailList');
-    const q = query(emailListRef, where('email', '==', email));
+    const q = query(emailListRef, where('email', '==', lowerCaseEmail));
     const querySnapshot = await getDocs(q);
 
     let passwordMatch = false;
